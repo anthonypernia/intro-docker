@@ -1,1 +1,29 @@
 Docker.com
+######commands
+##informacion
+docker info 
+docker --version
+##Hola mundo de docker
+docker run hello-world
+### ver contenedores corriendo
+docker ps
+###verlos todos , asi hayan cerrado
+docker ps -a
+###Ver uno en especifico
+docker inspect ID
+ejemplo:
+docker inspect 61fda89a04e9
+o docker inspect name
+ejemplo:
+docker inspect sleepy_jennings
+### correr contenedor con nombre  (--name) , ojo, docker no permite dos contenedores con el mismo nombre
+docker run --name hello-anthony  hello-word 
+##cambiar nombre de contenedor
+docker rename hello-anthony hello-anthony-cambiado
+###eliminar contenedores
+docker rm ID|nombre
+ejemplo:
+docker rm hello-anthony-cambiado
+#### eliminar containers que no estan usados o estan parados
+docker container prune
+
