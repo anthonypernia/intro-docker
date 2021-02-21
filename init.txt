@@ -26,4 +26,56 @@ ejemplo:
 docker rm hello-anthony-cambiado
 #### eliminar containers que no estan usados o estan parados
 docker container prune
-
+### iniciar ubuntu en docker
+docker run ubuntu
+### iniciar ubuntu pero con interactivo (entras a la terminal)
+docker run -it ubuntu     
+#### creo un contenedor sin que se apague, (le quite el proceso main que se corta cuando salgo) 
+####alwaysup es el nombre, se puede cambiar
+docker run --name alwaysup -d ubuntu tail -f /dev/null
+## le ejecuto el proceso de bash , para entrar al contenedor de ubuntu alwaysup
+docker exec -it alwaysup bash
+##ver el process_id del contenedor en la terminal (alwaysup, es el nombre) (solo linux)
+docker inspect --format '{{.State.Pid}}' alwaysup
+##Detener contenedor (solo linux)
+kill proccess_id
+##Detener contenedor (TODOS)
+docker stop <container_id or container_name>
+###Correr servidor nginx en contenedor, le puse name: proxy (se bloquea la terminal, no la puedes usar, porque lo hace proceso main)
+docker run --name proxy -p 8080:80 nginx
+###Correr servidor nginx en contenedor, le puse name: proxy (SI LA PUEDES USAR, corre en backgroud) detach
+docker run --name proxy -d -p 8080:80 nginx
+##ver los logs del container que llame proxy (Se ven los que ha tirado hasta el momento del comando)
+docker logs proxy
+##ver los logs y seguir conectado, viendo los logs si se actualiza (-f es de 'follow')
+docker logs -f proxy
+## ver los ultimos 10 logs (puede ir el -f y quedar conectado o solo verlos y ya sin el -f)
+docker logs --tail 10 proxy
+docker logs --tail 10 -f proxy
+##correr una db mongo (nombre : db)
+docker run -d --name db mongo
+##entrar
+docker exec -it db bash
+##se pueden forzar a borrar los contenedores
+docker rm -f id o name_contenedor
+## Crear contenedor que acceda a carpeta de mi pc, en detach , se llama: db
+## lo que esta despues de los dos puntos (:) es la ruta en el contenedor
+## los datos van a quedar guardados en mi ruta, si elimino el contenedor y vuelvo a abrir otro igual en esa ruta, ##tendra los datos
+docker run -d --name db -v /Users/anthonypernia/Documents/projects/docker_curso/docker_data/mongodata:/data/db mongo
+##agrego users a db mongo desde terminal
+ db.users.insert({'nombre':'anthony'})
+##volumenes es la forma mas "segura" de compartir datos entre pc y contenedores
+##para ver los volumenes
+docker volume ls
+##para crear un volumen que se llame dbdata
+docker volumen create dbdata
+##correr container usando el volumen como origen y la ruta donde guardara los datos el container como destino
+docker run -d --name db --mount src=dbdata,dst=/data/db mongo
+### creo container llamado copytest, para probar pasar datos contenedor-pc
+docker run -d --name copytest ubuntu tail -f /dv/null
+### copiar archivos desde pc a container 
+## copytest es el nombre de container prueba.txt es el archivo origen y despues de los dos puntos es el destino
+docker cp prueba.txt copytest:/testing/test.txt 
+### ahora al reves , copiar archivos desde container hacia pc
+## aca movi la carpeta "testint" y la puse en la pc , y la renombre localtesting
+docker cp copytest:/testing localtesting 
