@@ -79,3 +79,28 @@ docker cp prueba.txt copytest:/testing/test.txt
 ### ahora al reves , copiar archivos desde container hacia pc
 ## aca movi la carpeta "testint" y la puse en la pc , y la renombre localtesting
 docker cp copytest:/testing localtesting 
+###ver las imagenes contenidas en docker actualmente
+docker image  ls
+### Traernos una imagen nueva , en este caso ubuntu version 20.04
+docker pull ubuntu:20.04
+##Creando propias imagenes, se crea un Dockerfile y se coloca el FROM 
+#luego se crea con este comando donde -t es el tag, y el punto , tiene q que ##ver con la ruta del Dockerfile, un punto es, en esta carpeta
+docker build -t ubuntu:antho . 
+##Luego con docker image ls , ver las imagenes
+##y ahora creamos un contenedor con la iamgen a ver como quedo
+docker run -it ubuntu:antho
+###para subir la imagen a docker hub, necesitamos loguearnos y hacer un push
+docker login
+## cambiar el tag a mi repositorio
+docker tag ubuntu:antho anthonyperniah/ubuntu:antho
+###varificas con docker image ls y publicas con push
+docker push anthonyperniah/ubuntu:antho
+## ver la historia de la imagen, la comanderia de las capas
+docker history ubuntu:antho
+##Herramienta externa para ver la estructura de la imagen 
+https://github.com/wagoodman/dive
+brew install dive
+###la usamos 
+
+
+
