@@ -101,6 +101,26 @@ docker history ubuntu:antho
 https://github.com/wagoodman/dive
 brew install dive
 ###la usamos 
-
-
-
+#ver la info de la imagen ubuntu
+dive ubuntu
+##Crear un container con una imagen creada, en este caso no la cree yo
+##pero estando con la imagen creada, dentro de esa carpeta hacer:
+##donde el punto, es lo q dice q esta en esa carpeta la imagen
+docker build -t platziapp .
+##corriendo la imagen (el --rm significa que despues de apagar el contenedor , se elimine)
+docker run --rm -p 3000:3000 platziapp
+docker run --rm -d -p 3000:3000 platziapp (-d en caso que quiera correr en background)
+####manera de conectar un contenedor con otros NETWORKING
+###ver todos
+docker network ls
+###crear red (attachable es para q las otras se puedan pegar)
+docker network create --attachable anthored
+###ver la info de la red
+docker network inspect anthored
+###conectar a esa red a un contenedor (creo contenedor y lo conecto a mi red q cree)
+docker run -d --name db mongo
+docker network connect anthored db
+##creo otro contenedor 
+docker run -d --name app -p 3000:3000 --env MONGO_URL=MONGODB://DB:27017/test platziapp
+####lo conecto a la red tambien
+docker network connect anthored app
