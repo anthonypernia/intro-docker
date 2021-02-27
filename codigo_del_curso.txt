@@ -124,3 +124,23 @@ docker network connect anthored db
 docker run -d --name app -p 3000:3000 --env MONGO_URL=MONGODB://DB:27017/test platziapp
 ####lo conecto a la red tambien
 docker network connect anthored app
+### correr el docker compose (estando en lacarpeta del compose)
+docker compose up   
+docker-compose up
+## o correrla en background
+docker compose up -d   
+docker-compose up -d  
+###bajar los servicios 
+docker-compose down
+docker compose down
+###listar los contenedores con docker-compose
+docker-compose ps
+##ver los logs de lso servicios
+docker-compose logs
+###quedarme viendo los logs
+docker-compose logs -f
+###ver los de alguno en especial
+docker-compose logs app db
+#### entrar al bash de la app, que en este caso se llama 'app'
+docker-compose exec app bash
+
