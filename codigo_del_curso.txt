@@ -143,4 +143,7 @@ docker-compose logs -f
 docker-compose logs app db
 #### entrar al bash de la app, que en este caso se llama 'app'
 docker-compose exec app bash
+##podemos buildear la imagen
+docker-compose build (en el directorio donde esta el compose)
+###
 
