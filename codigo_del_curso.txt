@@ -145,5 +145,24 @@ docker-compose logs app db
 docker-compose exec app bash
 ##podemos buildear la imagen
 docker-compose build (en el directorio donde esta el compose)
-###
-
+###levantar 2 containers con una misma imagen (modificar el docker compose los puertos, que sea un rango, asi)
+ #   ports: (esto en el docker compose)
+ #     - "3000-3001:3000" (esto en el docker compose)
+ #el scale es para crecer horizontalmente
+docker-compose up -d --scale app=2
+###ver todos los container
+docker ps -a
+## no borra todos los containers apagados
+docker container prune
+###borrar todo de todos los containers, asi esten arriba
+docker rm -f $(docker ps -aq)
+##borrar las network que no uso
+docker network prune
+borrar volume que no uso
+docker volume prune
+####borrar TOOODO lo que no usamos, imagenes , volumen, containers
+docker system prune
+#### crear imagen asignandole un fijo de 1gb de memoria
+docker run -d --name app --memory 1gb platziapp
+### ver los procesos del contenedor (looper es el nombre del contenedor)
+docker exec looper ps -ef
