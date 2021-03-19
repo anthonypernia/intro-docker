@@ -166,3 +166,6 @@ docker system prune
 docker run -d --name app --memory 1gb platziapp
 ### ver los procesos del contenedor (looper es el nombre del contenedor)
 docker exec looper ps -ef
+###darle acceso a nuestro docker sock a algun container, aca este contenedor puede manejar otros contenedores
+(docker:19.03.15 es la ultima iamgen de docker, pero puedes usar otra)
+docker run -it --rm  -v /var/run/docker.sock:/var/run/docker.sock docker:19.03.15 
